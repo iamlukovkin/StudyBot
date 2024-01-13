@@ -37,16 +37,28 @@ admin_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     ]
 )
 
-profile_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+student_profile_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     
     keyboard=[
         
-        [
-            
-            edit_name_button,
-            edit_group_button
-            
-        ],
+        [edit_name_button, edit_group_button],
         [back_button]
+
     ]
+)
+
+tutor_profile_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[
+        
+        [edit_name_button],
+        [back_button]
+
+    ]
+)
+
+homepage_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[[back_button]]
+
 )

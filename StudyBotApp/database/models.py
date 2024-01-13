@@ -27,6 +27,7 @@ class User(Base):
     fullname: str = Column(String(100), nullable=True)
     studgroup: str = Column(String(20), nullable=True)
     is_admin: bool = Column(Boolean, nullable=True, default=False)
+    is_tutor: bool = Column(Boolean, nullable=True, default=False)
     
     def get_group(self):
         

@@ -24,11 +24,7 @@ def _(message):
         
     )
     
-    keyboard.add(KeyboardButton(
-        
-        text=user.fullname
-        
-    ))
+    keyboard.add(KeyboardButton(text=user.fullname))
 
     bot.send_message(
         
@@ -57,22 +53,12 @@ def update_name(message):
         user.fullname = message.text
         session.commit()
     
-        bot.send_message(
-            
-            chat_id=message.chat.id,
-            text='Имя изменено'
-            
-        )
+        bot.send_message(chat_id=message.chat.id, text='Имя изменено')
         
         views.main_menu(message)
     
     else:
-        bot.send_message(
-            
-            chat_id=message.chat.id,
-            text='Некорректный ввод'
-            
-        )
+        bot.send_message(chat_id=message.chat.id, text='Некорректный ввод')
         
         views.profile_menu(message)
     

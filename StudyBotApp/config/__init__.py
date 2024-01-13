@@ -1,7 +1,9 @@
 from . import settings
 from .bot import my_bot as bot
 from .bot import run
+from .settings import BOT
 
+tutor_password: str = settings.BOT['tutor_password']
 
 db_conn: str = "{dbms}+{module}://{db_user}:{db_pass}@{db_host}/{db_name}".format(
     

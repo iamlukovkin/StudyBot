@@ -4,7 +4,7 @@ from database import *
 
 from Bot import views
 
-def check_user(message: Message):
+def _(message: Message):
     """
     Start command
     
@@ -18,6 +18,7 @@ def check_user(message: Message):
         User).filter(User.user_id == user_id).first()
     
     if not user:
+        
         fullname: str = message.from_user.first_name
         fullname += " " + message.from_user.last_name
         user: User = User(
@@ -32,15 +33,21 @@ def check_user(message: Message):
         try:
             session.add(user)
             session.commit()
+            message_text = 'Регистрация прошла успешно'
         
         except Exception as e:
             print(f"Error while adding new user: {e}")
             session.rollback()
+            _(message)
         
         finally:
             session.close()
-            
-        return False
+    
+    else:
+        message_text = 'Вы уже зарегистрированы'
+        
+    bot.send_message(chat_id=message.chat.id, text=message_text)
 
     views.main_menu(message)
-    return True
+    
+    return 

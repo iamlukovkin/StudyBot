@@ -10,7 +10,6 @@ import Bot
 def _(message: Message):
     
     user_id: int = message.chat.id
-    print(user_id)
     
     session: session = get_session()
     user: User = session.query(
@@ -22,11 +21,12 @@ def _(message: Message):
     else:
         group: str = user.studgroup
         
-    message_text: str = profile_text.format(
-        user.fullname, group, 
-        edit_name_button, edit_group_button)
+    message_text: str = profile_info(user)
     
-    keyboard: InlineKeyboardMarkup = profile_keyboard
+    if user.is_tutor:
+        keyboard: InlineKeyboardMarkup = tutor_profile_keyboard
+    else:
+        keyboard: InlineKeyboardMarkup = student_profile_keyboard
     
     bot.send_message(
         
