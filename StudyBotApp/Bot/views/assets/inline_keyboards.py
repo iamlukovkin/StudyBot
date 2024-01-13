@@ -2,7 +2,7 @@ from telebot.types import InlineKeyboardMarkup
 from telebot.types import InlineKeyboardButton
 from .inline_buttons import *
 
-home_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+home_student_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     
     keyboard=[
         
@@ -10,6 +10,22 @@ home_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
             
             profile_button, 
             lessons_button, 
+            exams_button,
+            tutors_info_button
+            
+        ],
+        
+    ]
+    
+)
+
+home_tutor_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[
+        
+        [
+            
+            profile_button, 
             exams_button,
             tutors_info_button
             

@@ -12,10 +12,6 @@ from openpyxl.utils import get_column_letter
 from docx import Document
 import pandas as pd
 
-from config.settings import DIRECTORIES
-from config.settings import FILE_PATHS
-
-
 def extract_tables_from_word(doc_path):
     doc = Document(doc_path)
     tables = []
@@ -51,7 +47,7 @@ def read_excel(path: str):
 
 
 def convert_docx_to_xlsx(index, path, doc_path, excel_dir):
-    file_path = doc_path + path
+    file_path = doc_path + '/' + path
     table_paths = []
     tables = extract_tables_from_word(file_path)
     for i, table in enumerate(tables):
@@ -100,31 +96,28 @@ def find_exams(header: list, groups: list, dates: list, exams: list):
                 if len(time) == 3:
                     time = '0' + time
                 formatted_time = time[:2] + ":" + time[2:]
-                finded_exams.append([group, date, formatted_time, exam])
+                if len(exam) > 5:
+                    finded_exams.append(
+                        [group, date, formatted_time, exam])
     return finded_exams
 
 
-def parse_exams(doc_path, excel_dir, save_path):
-    documents = os.listdir(doc_path)
+def _(doc_path, excel_dir):
+    try:
+        documents = os.listdir(doc_path)
+    except:
+        return []
     table_paths = []
     index = 0
     exams_list = []
     for docx_path in documents:
         if not docx_path.endswith('.docx'):
             continue
-        table_paths, index = convert_docx_to_xlsx(index, docx_path, doc_path, excel_dir)
+        table_paths, index = convert_docx_to_xlsx(
+            index, docx_path, doc_path, excel_dir)
         for path in table_paths:
             my_sheet = read_excel(path)
             matrix = convert_to_list_of_lists(my_sheet)
             header, groups, dates, exams = get_header_and_dates(matrix)
             exams_list.extend(find_exams(header, groups, dates, exams))
-    with open(save_path, 'w') as f:
-        json.dump({'Exams':exams_list}, f, ensure_ascii=False)
     return exams_list
-
-
-if __name__ == '__main__':
-    doc_path = DIRECTORIES['WORD_LESSONS_DIR']
-    excel_dir = DIRECTORIES['EXCEL_LESSONS_DIR']
-    save_path = FILE_PATHS['EXAMS_JSON']
-    parse_exams(doc_path, excel_dir)

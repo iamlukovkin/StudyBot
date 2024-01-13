@@ -1,3 +1,4 @@
+import os
 import dotenv
 
 
@@ -41,4 +42,29 @@ DATABASE: dict[str, str] = {
         
     }
         
+}
+
+static_folder: str = 'static/'
+if not os.path.exists(static_folder): os.mkdir(static_folder)
+
+FOLDERS: dict[str, str] = {
+    
+    'lessons': static_folder + 'lessons/',
+    'exams': static_folder + 'exams/',
+    'json': static_folder + 'jsons/',
+    'temp': static_folder + 'temp/'
+    
+}
+
+FILES: dict[str, str] = {
+    'db_data': FOLDERS['json'] + 'data.json',
+}
+
+for folder in FOLDERS.values():
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+
+
+CONSTANTS: dict[str, str] = {
+    
 }

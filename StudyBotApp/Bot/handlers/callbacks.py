@@ -1,6 +1,7 @@
 from config import bot
 from telebot.types import CallbackQuery
 from Bot import func
+from database import *
 
 from Bot.views import *
 
@@ -45,5 +46,19 @@ def edit_name(query: CallbackQuery):
     bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
     
     func.edit_name(query.message)
+    
+    return
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == update_database_button.callback_data)
+def update_database(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    user_id: int = query.message.chat.id
+    user: User = func.check_user_exists(query.message)
+    if not user.is_admin:
+        return
+    
+    func.update_database(query.message)
     
     return

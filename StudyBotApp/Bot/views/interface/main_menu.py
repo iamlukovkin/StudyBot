@@ -15,11 +15,12 @@ def _(message: Message):
     user: User = session.query(
         User).filter(User.user_id == user_id).first()
     
-    user_admin: bool = user.is_admin
-    if user_admin:
+    if user.is_admin:
         keyboard: InlineKeyboardMarkup = admin_keyboard
+    elif user.is_tutor:
+        keyboard: InlineKeyboardMarkup = home_tutor_keyboard
     else:
-        keyboard: InlineKeyboardMarkup = home_keyboard
+        keyboard: InlineKeyboardMarkup = home_student_keyboard
     
     bot.send_message(
         chat_id=message.chat.id,

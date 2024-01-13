@@ -2,6 +2,9 @@ from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Boolean
+from sqlalchemy import Text
+from sqlalchemy import Date
+from sqlalchemy import Time
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -39,3 +42,26 @@ class User(Base):
         
         return my_group
     
+    
+class Session(Base):
+    __tablename__ = 'session'
+    
+    id: Integer = Column(Integer, primary_key=True, autoincrement=True)
+    group: String = Column(String(20))
+    date: Date = Column(String(20))
+    time: Time = Column(Time)
+    exam_info: Text = Column(Text)
+    
+    
+class Lesson(Base):
+    """
+    """
+    __tablename__ = 'lessons'
+    
+    id: Integer = Column(Integer, primary_key=True, autoincrement=True)
+    group: String = Column(String(20))
+    day: String = Column(String(20))
+    time_start: Time = Column(Time)
+    time_end: Time = Column(Time, nullable=True)
+    week: String = Column(String(20))
+    lesson_info: Text = Column(Text)

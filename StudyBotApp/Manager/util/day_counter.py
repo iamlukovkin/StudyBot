@@ -39,16 +39,7 @@ def week_tomorrow():
     return week
 
 
-def day_of_week():
-    """
-    Counts day of the week.
-
-    Args:
-        day (str): day of the week
-
-    Returns:
-        int: day of the week
-    """
+def day_of_week() -> str:
     today = datetime.datetime.now()
     
     day = today.weekday().as_integer_ratio()[0]
@@ -70,3 +61,10 @@ def day_tomorrow():
     day_tomorrow = days[day]
     return day_tomorrow
 
+
+def week_day_today():
+    return week_today(), day_of_week()
+
+
+def week_day_tomorrow():
+    return week_tomorrow(), day_tomorrow()

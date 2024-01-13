@@ -7,7 +7,7 @@ from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
 
 
-def refresh_graphs(directory: str):
+def _(directory: str):
     """
     Refreshes graphs.
     
@@ -21,11 +21,15 @@ def refresh_graphs(directory: str):
     lessons = []
     warnings.filterwarnings("ignore", category=UserWarning)
     for filename in os.listdir(directory):
-        my_sheet = read_excel(directory + filename)
-        matrix = convert_to_list_of_lists(my_sheet)
-        cropped_matrix = crop_matrix(matrix)
-        finded_lessons = find_lesson(cropped_matrix)
-        [lessons.append(lesson) for lesson in finded_lessons if None not in lesson]
+        try:
+            my_sheet = read_excel(directory + '/' + filename)
+            matrix = convert_to_list_of_lists(my_sheet)
+            cropped_matrix = crop_matrix(matrix)
+            finded_lessons = find_lesson(cropped_matrix)
+            [lessons.append(lesson) for lesson in finded_lessons\
+                if None not in lesson]
+        except:
+            continue
     return lessons
 
 
@@ -49,7 +53,7 @@ def read_excel(path: str):
                             coordinate = get_column_letter(my_cell[1]) + str(my_cell[0]) 
                             if value is not None: 
                                 my_sheet[coordinate].value = value
-    os.remove(path) 
+    # os.remove(path) 
     return my_sheet
 
 
@@ -81,6 +85,7 @@ def find_lesson(matrix: list):
         temp = temp.replace('.', '')
         temp = temp.split('смена')[0]
         index = header.index(group)
+        temp = 'gr_' + temp
         for row in matrix:
             lesson = row[index]
             if lesson is None or lesson == '':

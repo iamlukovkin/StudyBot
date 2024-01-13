@@ -2,6 +2,8 @@ from . import settings
 from .bot import my_bot as bot
 from .bot import run
 from .settings import BOT
+from .settings import FOLDERS
+from .settings import FILES
 
 tutor_password: str = settings.BOT['tutor_password']
 
