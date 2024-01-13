@@ -4,3 +4,7 @@ from .edit_name import _ as edit_name
 from .reg_tutor import _ as reg_tutor
 from .check_user_exists import _ as check_user_exists
 from .update_database import _ as update_database
+from .student_lessons_today import _ as student_lessons_today
+from .student_lessons_tomorrow import _ as student_lessons_tomorrow
+from .tutor_lessons_today import _ as tutor_lessons_today
+from .tutor_lessons_tomorrow import _ as tutor_lessons_tomorrow

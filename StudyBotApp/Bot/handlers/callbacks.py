@@ -1,6 +1,7 @@
 from config import bot
 from telebot.types import CallbackQuery
 from Bot import func
+import Manager
 from database import *
 
 from Bot.views import *
@@ -60,5 +61,60 @@ def update_database(query: CallbackQuery):
         return
     
     func.update_database(query.message)
+    
+    return
+
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == lessons_button.callback_data)
+def lessons(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    
+    lessons_menu(query.message)    
+    
+    return
+
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == student_lessons_today_button.callback_data)
+def student_lessons_today(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    
+    func.student_lessons_today(query.message)
+    
+    return
+
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == student_lessons_tomorrow_button.callback_data)
+def student_lessons_tomorrow(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    
+    func.student_lessons_tomorrow(query.message)
+    
+    return
+
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == tutor_lessons_today_button.callback_data)
+def tutor_lessons_today(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    
+    func.tutor_lessons_today(query.message)
+    
+    return
+
+
+@bot.callback_query_handler(
+    func=lambda call: call.data == tutor_lessons_tomorrow_button.callback_data)
+def tutor_lessons_tomorrow(query: CallbackQuery):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
+    
+    func.tutor_lessons_tomorrow(query.message)
     
     return

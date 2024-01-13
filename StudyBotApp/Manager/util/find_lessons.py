@@ -88,7 +88,7 @@ def find_lesson(matrix: list):
         temp = 'gr_' + temp
         for row in matrix:
             lesson = row[index]
-            if lesson is None or lesson == '':
+            if lesson is None or len(lesson) < 5:
                 continue
             day, time, week = get_lesson_info(row, matrix)
             if None not in (day, time, week):

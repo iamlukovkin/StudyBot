@@ -78,3 +78,32 @@ homepage_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     keyboard=[[back_button]]
 
 )
+
+lessons_info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[
+        [lessons_button, back_button]
+    ]
+)
+
+tutor_lessons_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[
+        [
+            tutor_lessons_today_button, 
+            tutor_lessons_tomorrow_button,
+            tutor_lessons_all_button],
+        [back_button]
+    ]
+)
+
+student_lessons_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[
+        [
+            student_lessons_today_button, 
+            student_lessons_tomorrow_button,
+            student_lessons_all_button],
+        [back_button]
+    ]
+)

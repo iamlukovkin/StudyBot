@@ -60,7 +60,46 @@ edit_group_button: InlineKeyboardButton = InlineKeyboardButton(
 
 back_button: InlineKeyboardButton = InlineKeyboardButton(
     
-    text="◀️ Назад",
+    text="◀️",
     callback_data="homepage"
 
+)
+
+student_lessons_today_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📗",
+    callback_data="student_lessons_today"
+)
+
+student_lessons_tomorrow_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📘",
+    callback_data="student_lessons_tomorrow"
+)
+
+student_lessons_all_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📚",
+    callback_data="student_lessons_all"
+    
+)
+
+tutor_lessons_today_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📘",
+    callback_data="tutor_lessons_today"
+    
+)
+
+tutor_lessons_tomorrow_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📗",
+    callback_data="tutor_lessons_tomorrow"
+)
+
+tutor_lessons_all_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📚",
+    callback_data="tutor_lessons_all"
+    
 )

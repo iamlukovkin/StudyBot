@@ -5,12 +5,15 @@ from database import *
 from datetime import time
 
 
-def update_lessons(data_list: list):
+def update_lessons(data_list: list) -> tuple[int, int]:
     """
     Updates lessons in database.
     
     Args:
         data_list (list): list of lessons
+        
+    Returns:
+        tuple[int, int]: number of skipped lessons and number of successfully added lessons
     """
     
     session = get_session()
@@ -56,16 +59,20 @@ def update_lessons(data_list: list):
         finally:
             session.close()
     
-    return
+    return len(data_list), len(data_list) - session.query(Lesson).count()
 
 
-def update_exams(data_list: list):
+def update_exams(data_list: list) -> tuple[int, int]:
     """
     Updates exams in database.
     
     Args:
         data_list (list): list of exams
+    
+    Returns:
+        tuple[int, int]: number of skipped exams and number of successfully added exams
     """
+    
     session = get_session()
     session.query(Session).delete()
     
@@ -94,7 +101,7 @@ def update_exams(data_list: list):
         finally:
             session.close()
 
-    return
+    return len(data_list), len(data_list) - session.query(Session).count()
         
 
 def _(require_download: bool = False):
@@ -103,8 +110,10 @@ def _(require_download: bool = False):
     
     Args:
         require_download (bool, optional): require download. Defaults to False.
+        
+    Returns:
+        tuple[int, int, int, int]: number of skipped lessons, number of successfully added lessons, number of skipped exams, number of successfully added exams
     """
-    
     
     Manager.prepare_database_data(download_files=require_download)
     
@@ -114,10 +123,11 @@ def _(require_download: bool = False):
     for key in data.keys():
         data_list: list = data[key]
         if key == 'lessons':
-            update_lessons(data_list)
+            lessons_added, lessons_skipped = update_lessons(data_list)
         elif key == 'exams':
-            update_exams(data_list)
-            pass
+            exams_added, exams_skipped = update_exams(data_list)
+            
+    return lessons_added, lessons_skipped, exams_added, exams_skipped
 
         
         

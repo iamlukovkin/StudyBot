@@ -65,3 +65,19 @@ class Lesson(Base):
     time_end: Time = Column(Time, nullable=True)
     week: String = Column(String(20))
     lesson_info: Text = Column(Text)
+    
+    def get_info(self) -> str:
+        message_text: str = self.lesson_info + '\n'
+        message_text += 'Начало: {}'.format(self.time_start.strftime('%H:%M'))
+        if self.time_end:
+            message_text += '\nКонец: {}'.format(self.time_end.strftime('%H:%M'))
+        message_text = message_text.strip() + '\n\n'
+        return message_text
+    
+    def get_info_with_group(self) -> str:
+        message_text: str = '({}) {}\n'.format(self.group, self.lesson_info)
+        message_text += 'Начало: {}'.format(self.time_start.strftime('%H:%M'))
+        if self.time_end:
+            message_text += '\nКонец: {}'.format(self.time_end.strftime('%H:%M'))
+        message_text = message_text.strip() + '\n\n'
+        return message_text

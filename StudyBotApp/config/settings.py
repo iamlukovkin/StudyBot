@@ -1,5 +1,6 @@
 import os
 import dotenv
+import datetime
 
 
 dotenv_path: str = "config/.env"
@@ -66,5 +67,5 @@ for folder in FOLDERS.values():
 
 
 CONSTANTS: dict[str, str] = {
-    
+    'EVENT_DATE': datetime.datetime(2024, 2, 5)
 }

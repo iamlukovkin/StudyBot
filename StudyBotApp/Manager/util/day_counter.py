@@ -63,8 +63,20 @@ def day_tomorrow():
 
 
 def week_day_today():
+    """
+    Counts week and day today.
+
+    Returns:
+        tuple[str, str]: week and day
+    """
     return week_today(), day_of_week()
 
 
 def week_day_tomorrow():
+    """
+    Counts week and day tomorrow.
+
+    Returns:
+        tuple[str, str]: week and day
+    """
     return week_tomorrow(), day_tomorrow()
