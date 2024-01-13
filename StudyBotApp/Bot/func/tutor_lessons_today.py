@@ -29,7 +29,7 @@ def _(message: Message):
     else:
         for lesson in today_lessons:
             lesson: Lesson
-            message_text += lesson.get_info()
+            message_text += lesson.get_info_with_group()
             
     message_text += views.lessons_info_text
     

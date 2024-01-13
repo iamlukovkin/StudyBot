@@ -32,3 +32,14 @@ def reg_tutor(message: Message):
     func.reg_tutor(message)
     
     return
+
+
+@bot.message_handler(commands=['chmode'])
+def change_mode(message: Message):
+    
+    bot.clear_step_handler_by_chat_id(chat_id=message.chat.id)
+    
+    func.change_mode(message)
+    
+    return
+

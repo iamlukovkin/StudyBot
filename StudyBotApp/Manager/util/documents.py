@@ -9,7 +9,7 @@ class my_docx:
         self.purple_color = RGBColor(0x80, 0x00, 0x80)
         pass
     
-    def get_docx():
+    def get_docx() -> Document:
         """
         Creates docx document.
 

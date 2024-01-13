@@ -12,7 +12,7 @@ def _(message: Message):
     session: session = get_session()
     user: User = session.query(
         User).filter(User.user_id == user_id).first()
-    group: str = user.get_group()
+    group: str = user.studgroup
     session.close()
     
     week, day = Manager.tomorrow()

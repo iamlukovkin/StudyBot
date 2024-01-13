@@ -29,7 +29,6 @@ tutors_info_button: InlineKeyboardButton = InlineKeyboardButton(
     
 )
 
-
 update_database_button: InlineKeyboardButton = InlineKeyboardButton(
     
     text="Обновить базу данных", 
@@ -102,4 +101,34 @@ tutor_lessons_all_button: InlineKeyboardButton = InlineKeyboardButton(
     text="📚",
     callback_data="tutor_lessons_all"
     
+)
+
+change_mode_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="🔒",
+    callback_data="change_mode"
+)
+
+support_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📞",
+    callback_data="support"
+)
+
+stud_tutor_today_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="👨‍🦰",
+    callback_data="stud_tutor_today"
+)
+
+stud_tutor_tomorrow_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="🕞",
+    callback_data="stud_tutor_tomorrow"
+)
+
+stud_tutor_all_button: InlineKeyboardButton = InlineKeyboardButton(
+    
+    text="📑",
+    callback_data="stud_tutor_all"
 )

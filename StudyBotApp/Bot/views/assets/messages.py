@@ -1,15 +1,17 @@
 from database import *
 from .inline_buttons import *
+from telebot.types import InlineKeyboardMarkup
 
 homepage_text: str = \
     '<b>Домашняя страница</b> \n\n' \
     '{0.text} - Профиль \n'\
     '{1.text} - Занятия \n'\
     '{2.text} - Экзамены \n'\
-    '{3.text} - Расписание преподавателя'.format(
+    '{3.text} - Расписание преподавателя\n'\
+    '{4.text} - Связаться с нами'.format(
         
         profile_button, lessons_button, 
-        exams_button, tutors_info_button
+        exams_button, tutors_info_button, support_button
         
     )
 
@@ -82,3 +84,47 @@ lessons_info_text: str = \
     '{1.text} - Назад\n'.format(
         lessons_button, back_button
 )
+
+homepage_text_kb: str = \
+    '{0.text} - Домашняя страница \n'.format(
+        homepage_button
+    )
+        
+
+
+tutors_info: str = \
+    '<b>Расписание преподавателя</b> \n\n' \
+        '{0.text} - Расписание на сегодня\n' \
+        '{1.text} - Расписание на завтра\n' \
+        '{2.text} - Полное расписание\n' \
+        '{3.text} - Назад'.format(
+            stud_tutor_today_button,
+            stud_tutor_tomorrow_button,
+            stud_tutor_all_button,
+            back_button
+        )
+        
+        
+def tutors_rating(mode: str) -> str:
+    
+    message_text: str = 'Введите ФИО преподавателя\n'\
+        '<i>Рекомендуется писать ФИО полностью.</i>\n'\
+        
+    session: session = get_session()
+    tutors = session.query(RaitingTutor).order_by(
+        RaitingTutor.count.desc()).limit(5).all()
+    session.close()
+    keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup()
+    if len(tutors) != 0:
+        message_text += 'наиболее популярные запросы представлены ниже\n\n'
+    for tutor in tutors:
+        tutor: RaitingTutor
+        message_text += tutor.tutor_name + ' - ' + str(tutor.count) + '\n'
+        keyboard.add(InlineKeyboardButton(
+            text=tutor.tutor_name, 
+            callback_data='search_tutor_'+mode+'_'+str(tutor.id)))
+    keyboard.add(homepage_button)
+        
+    return message_text, keyboard
+    
+    

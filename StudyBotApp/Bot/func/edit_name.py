@@ -12,9 +12,13 @@ def _(message):
     user_id: int = message.chat.id
     message_text: str = 'Пришлите свое имя (<i>рекомендуется писать ФИО полностью</i>)'
     session: session = get_session()
-    
-    user: User = session.query(
-        User).filter(User.user_id == user_id).first()
+    try:
+        user: User = session.query(
+            User).filter(User.user_id == user_id).first()
+    except:
+        session.rollback()
+    finally:
+        session.close()
     
     keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
         
@@ -49,9 +53,18 @@ def update_name(message):
     user: User = session.query(
         User).filter(User.user_id == user_id).first()
     
+    
     if len(message.text) <= 100:
+        
+        if user.is_tutor:
+            rating_tutor: RaitingTutor = session.query(
+                RaitingTutor).filter(RaitingTutor.tutor_name == user.fullname).first()
+            rating_tutor.tutor_name = message.text
+            session.commit()
+        
         user.fullname = message.text
         session.commit()
+        session.close()
     
         bot.send_message(chat_id=message.chat.id, text='Имя изменено')
         

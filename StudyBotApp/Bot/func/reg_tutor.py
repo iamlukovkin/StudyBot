@@ -82,7 +82,19 @@ def reg_tutor_password(message: Message):
         session = get_session()
         user: User | bool = check_user_exists(message)
         session.query(User).filter(
-            User.user_id == user_id).update({User.is_tutor: True})
+            User.user_id == user_id).update(
+                {
+                    User.is_tutor: True,
+                    User.studgroup: 'Не указана'
+                }
+            )
+        
+        rating_tutor: RaitingTutor = RaitingTutor(
+            tutor_name=user.fullname,
+            count=0,
+        )
+        session.add(rating_tutor)
+        
         session.commit()
         
         bot.send_message(

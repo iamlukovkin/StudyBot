@@ -19,8 +19,10 @@ def _(message: Message):
     
     if not user:
         
-        fullname: str = message.from_user.first_name
-        fullname += " " + message.from_user.last_name
+        fullname: str = message.from_user.first_name \
+            if message.from_user.first_name else ""
+        if message.from_user.last_name:
+            fullname += " " + message.from_user.last_name
         user: User = User(
             
             user_id=user_id,

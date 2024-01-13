@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import String
@@ -66,18 +67,123 @@ class Lesson(Base):
     week: String = Column(String(20))
     lesson_info: Text = Column(Text)
     
-    def get_info(self) -> str:
+    def get_group(self):
+        
+        if '_' in self.group:
+            my_group: str = self.group.split('_')[1]
+            
+        else:
+            my_group: str = self.group
+        
+        return my_group
+    
+    def get_info(self, formatting: bool = True) -> str:
+        
+        base_date: datetime = datetime.datetime.combine(datetime.date.today(), self.time_start)
+        break_time: datetime = base_date + datetime.timedelta(minutes=45)
+        break_time: time = break_time.time()
+        
         message_text: str = self.lesson_info + '\n'
-        message_text += 'Начало: {}'.format(self.time_start.strftime('%H:%M'))
-        if self.time_end:
-            message_text += '\nКонец: {}'.format(self.time_end.strftime('%H:%M'))
+        
+        if formatting:
+            message_text += '<b>Начало:</b> {0}'
+            message_text += '\n<b>Перерыв:</b> {1}' 
+            
+            if self.time_end:
+                message_text += '\n<b>Конец:</b> {2}'
+        
+        else:
+            message_text += 'Начало: {0}'
+            message_text += '\nПерерыв: {1}' 
+            
+            if self.time_end:
+                message_text += '\nКонец: {2}'
+            
+        
         message_text = message_text.strip() + '\n\n'
+        
+        message_text.format(
+            self.time_start.strftime('%H:%M'),
+            break_time.strftime('%H:%M'),
+            self.time_end.strftime('%H:%M')
+        )
+        return message_text
+
+    def get_times(self):
+        
+        base_date: datetime = datetime.datetime.combine(
+            datetime.date.today(), self.time_start)
+        break_time: datetime = base_date + datetime.timedelta(minutes=45)
+        break_time: time = break_time.time()
+        
+        return self.time_start, break_time, self.time_end
+
+    def get_info_with_group(self, formatting: bool = True) -> str:
+        
+        base_date: datetime = datetime.datetime.combine(
+            datetime.date.today(), self.time_start)
+        break_time: datetime = base_date + datetime.timedelta(minutes=45)
+        break_time: time = break_time.time()
+        
+        if formatting:
+            message_text: str = '<b>({0})</b> {1}\n' 
+            message_text += '<b>Начало:</b> {2}' 
+            message_text += '\n<b>Перерыв:</b> {3}'
+            
+            if self.time_end:
+                message_text += '\n<b>Конец:</b> {4}'
+                
+        else:
+            message_text: str = '({0}) {1}\n' 
+            message_text += 'Начало: {2}' 
+            message_text += '\nПерерыв: {3}'
+            
+            if self.time_end:
+                message_text += '\nКонец: {4}'
+            
+        
+        message_text = message_text.strip() + '\n\n'
+        message_text = message_text.format(
+            self.get_group(),
+            self.lesson_info,
+            self.time_start.strftime('%H:%M'),
+            break_time.strftime('%H:%M'),
+            self.time_end.strftime('%H:%M')
+        )
         return message_text
     
-    def get_info_with_group(self) -> str:
-        message_text: str = '({}) {}\n'.format(self.group, self.lesson_info)
-        message_text += 'Начало: {}'.format(self.time_start.strftime('%H:%M'))
-        if self.time_end:
-            message_text += '\nКонец: {}'.format(self.time_end.strftime('%H:%M'))
-        message_text = message_text.strip() + '\n\n'
-        return message_text
+
+class Support(Base):
+    """ Support model
+
+    Args:
+        user_id (int): user id
+        time (Time): time
+        date (Date): date
+        message (Text): message
+    """
+    __tablename__ = 'support'
+    
+    id: Integer = Column(Integer, primary_key=True, autoincrement=True)
+    user_id: int = Column(Integer)
+    time: Time = Column(Time)
+    date: Date = Column(String(20))
+    message: Text = Column(Text)
+    
+    
+class RaitingTutor(Base):
+    """ RaitingTutor model
+
+    Args:
+        id (int): id
+        tutor_name (str): tutor name
+        count (int): count
+    """
+    __tablename__ = 'raiting_tutor'
+    
+    id: Integer = Column(Integer, primary_key=True, autoincrement=True)
+    tutor_name: String = Column(String(100))
+    count: Integer = Column(Integer)
+    
+    def increase_count(self):
+        self.count += 1

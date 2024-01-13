@@ -13,11 +13,9 @@ def get_engine() -> Engine:
 
 
 def get_session():
-    
     Session = sqlalchemy.orm.sessionmaker(bind=engine)
     
     return Session()
 
-
-engine: Engine = get_engine()
+engine = get_engine()
 Base.metadata.create_all(engine)

@@ -53,7 +53,8 @@ FOLDERS: dict[str, str] = {
     'lessons': static_folder + 'lessons/',
     'exams': static_folder + 'exams/',
     'json': static_folder + 'jsons/',
-    'temp': static_folder + 'temp/'
+    'temp': static_folder + 'temp/',
+    'docs': static_folder + 'docs/'
     
 }
 
