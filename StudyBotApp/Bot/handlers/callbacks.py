@@ -25,7 +25,7 @@ def back_home(query: CallbackQuery):
     bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
     
     main_menu(query.message)
-    
+
     return
 
 
@@ -50,12 +50,12 @@ def edit_name(query: CallbackQuery):
     
     return
 
+
 @bot.callback_query_handler(
     func=lambda call: call.data == update_database_button.callback_data)
 def update_database(query: CallbackQuery):
     
     bot.clear_step_handler_by_chat_id(chat_id=query.message.chat.id)
-    user_id: int = query.message.chat.id
     user: User = func.check_user_exists(query.message)
     if not user.is_admin:
         return

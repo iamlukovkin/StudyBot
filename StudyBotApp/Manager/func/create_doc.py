@@ -73,9 +73,9 @@ def _(filename: str, param: str, search_by: str = 'group'):
                 if lesson.time_end:
                     string_text += '\nКонец: {3}' 
                 
-                if lesson.time_start not in day_dict:
+                if lesson.lesson_info not in day_dict:
                     start_time, break_time, end_time = lesson.get_times()
-                    day_dict[lesson.time_start] = [
+                    day_dict[lesson.lesson_info] = [
                         [lesson.get_group()], 
                         string_text.format(
                             lesson.lesson_info,
@@ -85,20 +85,23 @@ def _(filename: str, param: str, search_by: str = 'group'):
                         )
                     ]
                 else:
-                    day_dict[lesson.time_start][0].append(
-                        lesson.get_group())
+                    if lesson.get_group() not in day_dict[
+                        lesson.lesson_info][0]:
+                        day_dict[lesson.lesson_info][0].append(
+                            lesson.get_group())
             
             for time in day_dict.keys():
                 if len(day_dict[time][0]) == 1:
                     prefix = 'Группа: '
                 else:
                     prefix = 'Группы: '
-                groups: str = prefix + ', '.join(day_dict[time][0]) 
-                p = doc.add_paragraph(groups)
-                p.style.color = RGBColor(0, 0, 0)
-                p.style.font.name = 'Arial'
-                p.style.font.size = Pt(12)
-                p.style.bold = True
+                if search_by != 'group':
+                    groups: str = prefix + ', '.join(day_dict[time][0]) 
+                    p = doc.add_paragraph(groups)
+                    p.style.color = RGBColor(0, 0, 0)
+                    p.style.font.name = 'Arial'
+                    p.style.font.size = Pt(12)
+                    p.style.bold = True
                 p = doc.add_paragraph(day_dict[time][1] + '\n\n')
                 p.style.color = RGBColor(0, 0, 0)
                 p.style.font.name = 'Arial'

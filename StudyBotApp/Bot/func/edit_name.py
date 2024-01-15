@@ -1,5 +1,6 @@
 from telebot.types import Message
 from telebot.types import ReplyKeyboardMarkup
+from telebot.types import ReplyKeyboardRemove
 from telebot.types import KeyboardButton
 from config import bot
 from database import *
@@ -23,8 +24,7 @@ def _(message):
     keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
         
         resize_keyboard=True,
-        one_time_keyboard=True,
-        input_field_placeholder=message_text
+        one_time_keyboard=True
         
     )
     
@@ -59,14 +59,27 @@ def update_name(message):
         if user.is_tutor:
             rating_tutor: RaitingTutor = session.query(
                 RaitingTutor).filter(RaitingTutor.tutor_name == user.fullname).first()
-            rating_tutor.tutor_name = message.text
+            if rating_tutor is None:
+                rating_tutor: RaitingTutor = RaitingTutor(
+                    tutor_name=message.text,
+                    count=0
+                )
+                session.add(rating_tutor)
+            else:
+                rating_tutor.tutor_name = message.text
             session.commit()
         
         user.fullname = message.text
         session.commit()
         session.close()
     
-        bot.send_message(chat_id=message.chat.id, text='Имя изменено')
+        bot.send_message(
+        
+            chat_id=message.chat.id, 
+            text='Имя изменено',
+            reply_markup=ReplyKeyboardRemove()
+        
+        )
         
         views.main_menu(message)
     

@@ -51,11 +51,11 @@ lessons_text_student: str = \
     '{0.text} - Занятия на сегодня \n' \
     '{1.text} - Занятия на завтра \n' \
     '{2.text} - Полное расписание \n' \
-    '{3.text} - Назад'.format(
+    '{3.text} - Домашняя страница'.format(
         student_lessons_today_button,
         student_lessons_tomorrow_button,
         student_lessons_all_button,
-        back_button
+        homepage_button
 )
     
 lessons_text_tutor: str = \
@@ -63,11 +63,11 @@ lessons_text_tutor: str = \
     '{0.text} - Занятия на сегодня \n' \
     '{1.text} - Занятия на завтра \n' \
     '{2.text} - Полное расписание \n' \
-    '{3.text} - Назад'.format(
+    '{3.text} - Домашняя страница'.format(
         tutor_lessons_today_button,
         tutor_lessons_tomorrow_button,
         tutor_lessons_all_button,
-        back_button
+        homepage_button
 )
 
 
@@ -81,8 +81,8 @@ def lessons_text(user: User) -> str:
 
 lessons_info_text: str = \
     '{0.text} - Занятия\n' \
-    '{1.text} - Назад\n'.format(
-        lessons_button, back_button
+    '{1.text} - Домашняя страница\n'.format(
+        lessons_button, homepage_button
 )
 
 homepage_text_kb: str = \
@@ -97,11 +97,11 @@ tutors_info: str = \
         '{0.text} - Расписание на сегодня\n' \
         '{1.text} - Расписание на завтра\n' \
         '{2.text} - Полное расписание\n' \
-        '{3.text} - Назад'.format(
+        '{3.text} - Домашняя страница'.format(
             stud_tutor_today_button,
             stud_tutor_tomorrow_button,
             stud_tutor_all_button,
-            back_button
+            homepage_button
         )
         
         
@@ -116,14 +116,15 @@ def tutors_rating(mode: str) -> str:
     session.close()
     keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup()
     if len(tutors) != 0:
-        message_text += 'наиболее популярные запросы представлены ниже\n\n'
+        message_text += 'Наиболее популярные запросы представлены ниже:\n\n'
     for tutor in tutors:
         tutor: RaitingTutor
         message_text += tutor.tutor_name + ' - ' + str(tutor.count) + '\n'
         keyboard.add(InlineKeyboardButton(
             text=tutor.tutor_name, 
             callback_data='search_tutor_'+mode+'_'+str(tutor.id)))
-    keyboard.add(homepage_button)
+    
+    keyboard.add(tutors_info_button, homepage_button)
         
     return message_text, keyboard
     

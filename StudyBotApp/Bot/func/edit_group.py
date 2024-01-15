@@ -1,5 +1,6 @@
 from telebot.types import Message
 from telebot.types import ReplyKeyboardMarkup
+from telebot.types import ReplyKeyboardRemove
 from telebot.types import KeyboardButton
 from config import bot
 from database import *
@@ -19,8 +20,7 @@ def _(message):
     keyboard: ReplyKeyboardMarkup = ReplyKeyboardMarkup(
         
         resize_keyboard=True,
-        one_time_keyboard=True,
-        input_field_placeholder=message_text
+        one_time_keyboard=True
         
     )
     
@@ -61,7 +61,8 @@ def update_group(message):
         bot.send_message(
             
             chat_id=message.chat.id,
-            text='Группа изменена'
+            text='Группа изменена',
+            reply_markup=ReplyKeyboardRemove()
             
         )
         
@@ -71,7 +72,8 @@ def update_group(message):
         bot.send_message(
             
             chat_id=message.chat.id,
-            text='Некорректный ввод'
+            text='Некорректный ввод',
+            reply_markup=ReplyKeyboardRemove()
             
         )
         

@@ -81,31 +81,31 @@ class Lesson(Base):
         
         base_date: datetime = datetime.datetime.combine(datetime.date.today(), self.time_start)
         break_time: datetime = base_date + datetime.timedelta(minutes=45)
-        break_time: time = break_time.time()
+        break_time: Time = break_time.time()
         
         message_text: str = self.lesson_info + '\n'
         
         if formatting:
-            message_text += '<b>Начало:</b> {0}'
-            message_text += '\n<b>Перерыв:</b> {1}' 
+            message_text += '\n<b>Начало:</b> {start_time}'
+            message_text += '\n<b>Перерыв:</b> {break_time}'
             
             if self.time_end:
-                message_text += '\n<b>Конец:</b> {2}'
+                message_text += '\n<b>Конец:</b> {end_time}'
         
         else:
-            message_text += 'Начало: {0}'
-            message_text += '\nПерерыв: {1}' 
+            message_text += '\nНачало: {start_time}'
+            message_text += '\nПерерыв: {break_time}' 
             
             if self.time_end:
-                message_text += '\nКонец: {2}'
+                message_text += '\nКонец: {end_time}'
             
         
-        message_text = message_text.strip() + '\n\n'
+        message_text = message_text.strip() + '\n\n\n'
         
-        message_text.format(
-            self.time_start.strftime('%H:%M'),
-            break_time.strftime('%H:%M'),
-            self.time_end.strftime('%H:%M')
+        message_text: str = message_text.format(
+            start_time=self.time_start.strftime('%H:%M'),
+            break_time=break_time.strftime('%H:%M'),
+            end_time=self.time_end.strftime('%H:%M')
         )
         return message_text
 
@@ -114,7 +114,7 @@ class Lesson(Base):
         base_date: datetime = datetime.datetime.combine(
             datetime.date.today(), self.time_start)
         break_time: datetime = base_date + datetime.timedelta(minutes=45)
-        break_time: time = break_time.time()
+        break_time: Time = break_time.time()
         
         return self.time_start, break_time, self.time_end
 
@@ -123,11 +123,11 @@ class Lesson(Base):
         base_date: datetime = datetime.datetime.combine(
             datetime.date.today(), self.time_start)
         break_time: datetime = base_date + datetime.timedelta(minutes=45)
-        break_time: time = break_time.time()
+        break_time: Time = break_time.time()
         
         if formatting:
             message_text: str = '<b>({0})</b> {1}\n' 
-            message_text += '<b>Начало:</b> {2}' 
+            message_text += '\n<b>Начало:</b> {2}' 
             message_text += '\n<b>Перерыв:</b> {3}'
             
             if self.time_end:
@@ -135,15 +135,15 @@ class Lesson(Base):
                 
         else:
             message_text: str = '({0}) {1}\n' 
-            message_text += 'Начало: {2}' 
+            message_text += '\nНачало: {2}' 
             message_text += '\nПерерыв: {3}'
             
             if self.time_end:
-                message_text += '\nКонец: {4}'
+                message_text += '\nКонец: {4}\n'
             
         
-        message_text = message_text.strip() + '\n\n'
-        message_text = message_text.format(
+        message_text: str = message_text.strip() + '\n\n'
+        message_text: str = message_text.format(
             self.get_group(),
             self.lesson_info,
             self.time_start.strftime('%H:%M'),
@@ -187,3 +187,4 @@ class RaitingTutor(Base):
     
     def increase_count(self):
         self.count += 1
+    

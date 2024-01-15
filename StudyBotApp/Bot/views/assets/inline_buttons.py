@@ -31,7 +31,7 @@ tutors_info_button: InlineKeyboardButton = InlineKeyboardButton(
 
 update_database_button: InlineKeyboardButton = InlineKeyboardButton(
     
-    text="Обновить базу данных", 
+    text="🗄", 
     callback_data="update_database"
     
 )

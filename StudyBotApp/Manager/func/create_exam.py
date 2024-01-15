@@ -31,23 +31,24 @@ def _(filename: str, param: str, search_by: str = 'group'):
     else:
         sessions = get_session().query(Session).filter(
             Session.exam_info.like('%{}%'.format(param))
-        ).order_by(Session.date).all()
+        ).order_by(Session.id).all()
         show_group = True
         
     for exam in sessions:
         exam: Session
-        p = doc.add_paragraph(exam.exam_info, style='Heading 2')
-        p.style.font.name = 'Arial'
-        p.style.font.size = Pt(24)
-        p.style.bold = True
         if show_group:
             group = exam.group.split('_')[1]
             p = doc.add_paragraph('Группа: ' + group, style='Heading 3')
             p.style.font.name = 'Arial'
             p.style.font.size = Pt(18)
             p.style.bold = True
+        p = doc.add_paragraph(exam.exam_info)
+        p.style.font.name = 'Arial'
+        p.style.font.size = Pt(18)
+        p.style.bold = True
         p = doc.add_paragraph(
-            'Дата: {}'.format(exam.date) + ' время: {}'.format(exam.time),
+            'Дата: {}'.format(exam.date) + ' время: {}\n\n'.format(
+                    exam.time.strftime("%H:%M")),
         )
         p.style.font.name = 'Arial'
         p.style.font.size = Pt(12)

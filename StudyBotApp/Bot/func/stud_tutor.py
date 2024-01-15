@@ -1,5 +1,6 @@
 import os
 from telebot.types import Message
+from telebot.types import InlineKeyboardMarkup
 from config import bot
 from config import FOLDERS
 from database import *
@@ -100,7 +101,7 @@ def search_tutor_by_id(message: Message, mode: str, tutor_id: int):
                 'На завтра у преподавателя <b>{}</b> пар нет\n\n'.format(
                     tutor.tutor_name)
         else:
-            message_text += 'У этого преподавателя пар нет\n\n'
+            message_text: str = 'У этого преподавателя пар нет\n\n'
         
     else:
         if mode == 'today': calendar_day = 'Сегодня'
@@ -153,7 +154,7 @@ def search_tutor_by_id(message: Message, mode: str, tutor_id: int):
             
     message_text += views.homepage_text_kb
     
-    keyboard: InlineKeyboardMarkup = views.homepage_keyboard
+    keyboard: InlineKeyboardMarkup = views.tutors_back_keyboard
     
     bot.send_message(chat_id=message.chat.id, text=message_text,
         reply_markup=keyboard)

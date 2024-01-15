@@ -16,7 +16,8 @@ APP: dict[str, str] = {
 BOT: dict[str, str] = {
     
     'token': dotenv.get_key(dotenv_path, "BOT_TOKEN"),
-    'tutor_password': dotenv.get_key(dotenv_path, "TUTOR_PASSWORD")
+    'tutor_password': dotenv.get_key(dotenv_path, "TUTOR_PASSWORD"),
+    'admin': [1629385827]
 
 }
 

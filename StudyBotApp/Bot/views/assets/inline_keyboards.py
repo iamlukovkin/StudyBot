@@ -6,15 +6,8 @@ home_student_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     
     keyboard=[
         
-        [
-            
-            profile_button, 
-            lessons_button, 
-            exams_button,
-            tutors_info_button,
-            support_button
-            
-        ],
+        [profile_button, lessons_button, exams_button],
+        [tutors_info_button, support_button]
         
     ]
     
@@ -41,18 +34,9 @@ admin_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     
     keyboard=[
         
-        [
-            
-            profile_button, 
-            lessons_button, 
-            exams_button,
-            tutors_info_button,
-            support_button
-            
-        ],
-        
-        [update_database_button],
-        [change_mode_button]
+        [profile_button, lessons_button, exams_button],
+        [tutors_info_button, support_button],
+        [update_database_button,change_mode_button]
         
     ]
 )
@@ -83,10 +67,15 @@ homepage_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
 
 )
 
+tutors_back_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
+    
+    keyboard=[[tutors_info_button, homepage_button]]
+)
+
 lessons_info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     
     keyboard=[
-        [lessons_button, back_button]
+        [lessons_button, homepage_button]
     ]
 )
 
@@ -96,8 +85,9 @@ tutor_lessons_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
         [
             tutor_lessons_today_button, 
             tutor_lessons_tomorrow_button,
-            tutor_lessons_all_button],
-        [back_button]
+            tutor_lessons_all_button
+        ],
+        [homepage_button]
     ]
 )
 
@@ -107,8 +97,9 @@ student_lessons_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
         [
             student_lessons_today_button, 
             student_lessons_tomorrow_button,
-            student_lessons_all_button],
-        [back_button]
+            student_lessons_all_button
+        ],
+        [homepage_button]
     ]
 )
 
@@ -121,6 +112,6 @@ tutors_info_keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
             stud_tutor_tomorrow_button,
             stud_tutor_all_button
         ],
-        [back_button]
+        [homepage_button]
     ]
 )

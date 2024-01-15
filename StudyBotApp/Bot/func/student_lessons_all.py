@@ -25,9 +25,10 @@ def _(message: Message):
     
     bot.send_document(chat_id=message.chat.id, document=open(path, 'rb'))
     os.remove(path)
+    message_text: str = 'Документ: {} отправлен.\n\n'.format(filename)
+    message_text += views.lessons_info_text
     bot.send_message(
         chat_id=user_id, 
-        text='Документ с расписанием группы {} отправлен.'.format(
-            user.get_group()),
-        reply_markup=views.homepage_keyboard
+        text=message_text,
+        reply_markup=views.lessons_info_keyboard
     )
